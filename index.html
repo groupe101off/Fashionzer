@@ -42,9 +42,24 @@
       background: #000;
       border: none;
     }
+    /* Overlay noir par-dessus la vidéo */
+    .video-overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: #000;
+      z-index: 2;
+      transition: opacity 0.5s;
+      pointer-events: none;
+    }
+    .video-overlay.hide {
+      opacity: 0;
+      pointer-events: none;
+    }
     .site-content {
       position: relative;
-      z-index: 2;
+      z-index: 3;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
@@ -58,7 +73,7 @@
       background: transparent;
       padding-top: 15px;
       padding-bottom: 0;
-      z-index: 3;
+      z-index: 4;
       border: none;
       box-shadow: none;
     }
@@ -80,13 +95,13 @@
       display: block;
       height: 3px;
       width: 100%;
-      background: #fff; /* BLANC */
+      background: #fff;
       border-radius: 2px;
       transition: all 0.3s;
     }
     .hamburger:hover span,
     .hamburger:focus span {
-      background: #d72660; /* Optionnel: rose au survol */
+      background: #d72660;
     }
     .logo {
       max-width: 400px;
@@ -129,7 +144,7 @@
     .menu ul li > a,
     .menu ul li > button {
       display: block;
-      color: #fff; /* blanc */
+      color: #fff;
       font-size: 16px;
       text-decoration: none;
       background: transparent;
@@ -224,12 +239,14 @@
 <body>
   <!-- FOND VIDEO YOUTUBE 9:16 -->
   <div class="video-bg" aria-hidden="true">
-    <iframe src="https://www.youtube.com/embed/owhJnF6Cya8?autoplay=1&mute=1&controls=0&loop=1&playlist=owhJnF6Cya8&modestbranding=1&showinfo=0&rel=0"
-            allow="autoplay; encrypted-media"
-            allowfullscreen
-            frameborder="0"
-            title="Fashionzer background video">
+    <iframe id="ytbg"
+      src="https://www.youtube.com/embed/owhJnF6Cya8?autoplay=1&mute=1&controls=0&loop=1&playlist=owhJnF6Cya8&modestbranding=1&showinfo=0&rel=0&enablejsapi=1"
+      allow="autoplay; encrypted-media"
+      allowfullscreen
+      frameborder="0"
+      title="Fashionzer background video">
     </iframe>
+    <div class="video-overlay" id="videoOverlay"></div>
   </div>
 
   <div class="site-content">
@@ -328,6 +345,36 @@
              }
          });
      });
+
+    // Overlay noir pour masquer les infos YouTube au chargement
+    // On attend que l'API YouTube Player soit prête pour retirer l'overlay
+    // Ajout dynamique de l'API YouTube
+    let overlayTimeout = null;
+    function hideOverlayNow() {
+      document.getElementById('videoOverlay').classList.add('hide');
+    }
+    function onYouTubeIframeAPIReady() {
+      new YT.Player('ytbg', {
+        events: {
+          'onReady': function() {
+            hideOverlayNow();
+          }
+        }
+      });
+    }
+    // Charger l'API et fallback au cas où l'API ne répond pas
+    (function(){
+      var tag=document.createElement('script');
+      tag.src="https://www.youtube.com/iframe_api";
+      var firstScriptTag=document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode.insertBefore(tag,firstScriptTag);
+      // Fallback: retire l'overlay au bout de 4s max si l'API YouTube ne répond pas (pour éviter qu'il reste bloqué)
+      overlayTimeout = setTimeout(hideOverlayNow, 4000);
+    })();
+    window.onYouTubeIframeAPIReady = function() {
+      onYouTubeIframeAPIReady();
+      if (overlayTimeout) clearTimeout(overlayTimeout);
+    }
   </script>
 </body>
 </html>
