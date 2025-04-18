@@ -52,10 +52,62 @@
       z-index: 2;
       transition: opacity 0.5s;
       pointer-events: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
     .video-overlay.hide {
       opacity: 0;
       pointer-events: none;
+    }
+    .video-loader {
+      position: absolute;
+      left: 50%;
+      top: 30%; /* Ajuste ici pour remonter ou descendre le loader (ex: 30% pour plus haut, 40% pour plus bas) */
+      transform: translate(-50%, -50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      color: #fff;
+      font-family: 'Montserrat', Arial, sans-serif;
+      font-size: 0.95em;   /* Taille du texte */
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      background: none;
+    }
+    .video-loader .bar {
+      width: 90px;         /* Largeur de la barre */
+      height: 5px;         /* Épaisseur de la barre */
+      background: #222;
+      border-radius: 4px;
+      margin-bottom: 14px;
+      overflow: hidden;
+      position: relative;
+    }
+    .video-loader .bar::before {
+      content: "";
+      display: block;
+      position: absolute;
+      left: -60%;
+      top: 0;
+      width: 60%;
+      height: 100%;
+      background: linear-gradient(90deg, #fff 10%, #d72660 90%);
+      animation: loading-bar 1.3s infinite cubic-bezier(.4,0,.2,1);
+      border-radius: 4px;
+    }
+    @keyframes loading-bar {
+      0% { left: -60%; }
+      100% { left: 100%; }
+    }
+    .video-loader span {
+      margin-top: 0;
+      font-size: 1em;
+      color: #fff;
+      text-shadow: 0 1px 8px rgba(0,0,0,0.2);
+      background: none;
     }
     .site-content {
       position: relative;
@@ -246,7 +298,12 @@
       frameborder="0"
       title="Fashionzer background video">
     </iframe>
-    <div class="video-overlay" id="videoOverlay"></div>
+    <div class="video-overlay" id="videoOverlay">
+      <div class="video-loader" id="videoLoader" aria-label="Download">
+        <div class="bar"></div>
+        <span>Download…</span>
+      </div>
+    </div>
   </div>
 
   <div class="site-content">
@@ -346,9 +403,7 @@
          });
      });
 
-    // Overlay noir pour masquer les infos YouTube au chargement
-    // On attend que l'API YouTube Player soit prête pour retirer l'overlay
-    // Ajout dynamique de l'API YouTube
+    // Overlay noir pour masquer les infos YouTube au chargement + barre de chargement
     let overlayTimeout = null;
     function hideOverlayNow() {
       document.getElementById('videoOverlay').classList.add('hide');
