@@ -31,7 +31,6 @@
       justify-content: center;
     }
     .video-bg iframe {
-      /* Pour une vidéo 9:16 : width = 56.25vh, height = 100vh */
       position: absolute;
       top: 50%; left: 50%;
       width: 56.25vh;
@@ -81,9 +80,13 @@
       display: block;
       height: 3px;
       width: 100%;
-      background: #222;
+      background: #fff; /* BLANC */
       border-radius: 2px;
       transition: all 0.3s;
+    }
+    .hamburger:hover span,
+    .hamburger:focus span {
+      background: #d72660; /* Optionnel: rose au survol */
     }
     .logo {
       max-width: 400px;
@@ -126,7 +129,7 @@
     .menu ul li > a,
     .menu ul li > button {
       display: block;
-      color: #fff;
+      color: #fff; /* blanc */
       font-size: 16px;
       text-decoration: none;
       background: transparent;
@@ -239,25 +242,25 @@
       <img src="logo.png" alt="FASHIONZER Logo" class="logo">
       <nav class="menu" id="side-menu" aria-label="Main navigation">
         <ul>
-          <li><a href="#">HOME</a></li>
-          <li><a href="#">STORY</a></li>
+          <li><a href="index.html">HOME</a></li>
+          <li><a href="story.html">STORY</a></li>
           <li>
             <button type="button" class="submenu-toggle" aria-expanded="false">EXPERIENCE ▸</button>
             <ul class="submenu">
-              <li><a href="#">Modèles</a></li>
-              <li><a href="#">Marques & Sponsors</a></li>
-              <li><a href="#">Créateurs</a></li>
-              <li><a href="#">Visiteurs</a></li>
+              <li><a href="experience-modeles.html">Modèles</a></li>
+              <li><a href="experience-marques.html">Marques & Sponsors</a></li>
+              <li><a href="experience-createurs.html">Créateurs</a></li>
+              <li><a href="experience-visiteurs.html">Visiteurs</a></li>
             </ul>
           </li>
           <li>
             <button type="button" class="submenu-toggle" aria-expanded="false">EVENTS ▸</button>
             <ul class="submenu">
-              <li><a href="#">Éditions passées</a></li>
-              <li><a href="#">Prochaine édition</a></li>
+              <li><a href="events-archives.html">Éditions passées</a></li>
+              <li><a href="events-next.html">Prochaine édition</a></li>
             </ul>
           </li>
-          <li><a href="#">JOIN US</a></li>
+          <li><a href="join.html">JOIN US</a></li>
         </ul>
       </nav>
     </div>
