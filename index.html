@@ -30,16 +30,15 @@
     }
     .video-bg iframe {
       position: absolute;
-      top: 50%; left: 50%;
-      /* ZOOM augmenté pour couvrir tout, même les bandes noires */
-      width: 145vw;
-      height: 90vw;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
       min-width: 100vw;
-      min-height: 110vh;
-      transform: translate(-50%, -50%);
+      min-height: 100vh;
       pointer-events: none;
       filter: brightness(0.75);
       background: #000;
+      border: none;
     }
     .site-content {
       position: relative;
@@ -209,13 +208,19 @@
         top: 68px;
         height: calc(100vh - 68px);
       }
+      .video-bg iframe {
+        width: 100vw;
+        height: 100vh;
+        min-width: 100vw;
+        min-height: 100vh;
+      }
     }
   </style>
 </head>
 <body>
   <!-- FOND VIDEO YOUTUBE -->
   <div class="video-bg" aria-hidden="true">
-    <iframe src="https://www.youtube.com/embed/KXNwdh567wU?autoplay=1&mute=1&controls=0&loop=1&playlist=KXNwdh567wU&modestbranding=1&showinfo=0&rel=0"
+    <iframe src="https://www.youtube.com/embed/omt3_L3YxYE?autoplay=1&mute=1&controls=0&loop=1&playlist=omt3_L3YxYE&modestbranding=1&showinfo=0&rel=0"
             allow="autoplay; encrypted-media"
             allowfullscreen
             frameborder="0"
