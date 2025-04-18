@@ -1,0 +1,65 @@
+/* --- Début du Code CSS Complet --- */
+
+/* Style de base */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif; /* Police de base, à adapter selon l'identité visuelle */
+    /* background-color: #1a1a1a; */ /* Optionnel: couleur de fond générale si besoin */
+}
+
+/* Conteneur vidéo principal */
+.video-background {
+    position: fixed; /* Positionné par rapport à la fenêtre, reste fixe au scroll */
+    top: 0;
+    left: 0;
+    width: 100%; /* Prend toute la largeur */
+    height: 100%; /* Prend toute la hauteur */
+    z-index: -1; /* Se place derrière tous les autres contenus */
+    overflow: hidden; /* Empêche tout débordement de l'iframe */
+    background-color: #000; /* Couleur visible avant le chargement de la vidéo */
+}
+
+/* Iframe YouTube injecté par le JavaScript */
+#yt-background {
+    /* Technique pour couvrir ET centrer en gardant le ratio 16:9 */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    /* Dimensions minimales basées sur le ratio 16:9 pour couvrir le viewport */
+    width: 100vw; /* Assure au moins la largeur du viewport */
+    height: 56.25vw; /* Hauteur = 9/16 * largeur (100vw) */
+    min-height: 100vh; /* Assure au moins la hauteur du viewport */
+    min-width: 177.77vh; /* Largeur = 16/9 * hauteur (100vh) */
+    /* Centrage de l'iframe potentiellement surdimensionné */
+    transform: translate(-50%, -50%);
+    /* Empêche toute interaction avec la vidéo */
+    pointer-events: none;
+}
+
+/* Conteneur pour le contenu superposé (logo, texte, etc.) */
+.content-overlay {
+    position: relative; /* Nécessaire pour que z-index fonctionne */
+    z-index: 1; /* Se place au-dessus de .video-background */
+    color: white; /* Couleur par défaut pour le contenu texte éventuel */
+    padding: 20px; /* Espace intérieur pour éviter que le contenu touche les bords */
+
+    /* Utilisation de Flexbox pour centrer le contenu enfant (le logo ici) */
+    display: flex;
+    justify-content: center; /* Centre horizontalement */
+    align-items: center;     /* Centre verticalement */
+    min-height: 100vh;       /* Hauteur minimale = hauteur complète de la fenêtre */
+    box-sizing: border-box;  /* Inclut le padding dans la dimension totale (100vh) */
+}
+
+/* Style spécifique pour l'image du logo dans l'overlay */
+.content-overlay img {
+    display: block; /* Traite l'image comme un bloc */
+    /* Définir une taille maximale pour le logo */
+    max-width: 250px; /* Ajustez cette valeur selon la taille souhaitée */
+    /* Ou utiliser un pourcentage : max-width: 60%; */
+    height: auto;   /* Conserve les proportions de l'image */
+}
+
+/* --- Fin du Code CSS Complet --- */
+
