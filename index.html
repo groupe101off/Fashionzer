@@ -63,7 +63,7 @@
     .video-loader {
       position: absolute;
       left: 50%;
-      top: 30%; /* Ajuste ici pour remonter ou descendre le loader (ex: 30% pour plus haut, 40% pour plus bas) */
+      top: 45%; /* Descend le loader (ex: 45%) */
       transform: translate(-50%, -50%);
       display: flex;
       flex-direction: column;
@@ -72,17 +72,17 @@
       z-index: 10;
       color: #fff;
       font-family: 'Montserrat', Arial, sans-serif;
-      font-size: 0.95em;   /* Taille du texte */
+      font-size: 0.6em;   /* Taille du texte réduite de moitié */
       font-weight: 700;
       letter-spacing: 0.1em;
       background: none;
     }
     .video-loader .bar {
-      width: 90px;         /* Largeur de la barre */
-      height: 5px;         /* Épaisseur de la barre */
+      width: 45px;         /* Largeur de la barre réduite de moitié */
+      height: 2.5px;       /* Épaisseur de la barre réduite de moitié */
       background: #222;
       border-radius: 4px;
-      margin-bottom: 14px;
+      margin-bottom: 7px;
       overflow: hidden;
       position: relative;
     }
