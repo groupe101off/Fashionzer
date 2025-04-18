@@ -41,6 +41,7 @@
       pointer-events: none;
       background: #000;
       border: none;
+      display: none;
     }
     /* Overlay noir par-dessus la vidéo */
     .video-overlay {
@@ -63,7 +64,7 @@
     .video-loader {
       position: absolute;
       left: 50%;
-      top: 45%; /* Descend le loader (ex: 45%) */
+      top: 45%; /* Descendu */
       transform: translate(-50%, -50%);
       display: flex;
       flex-direction: column;
@@ -72,14 +73,14 @@
       z-index: 10;
       color: #fff;
       font-family: 'Montserrat', Arial, sans-serif;
-      font-size: 0.6em;   /* Taille du texte réduite de moitié */
+      font-size: 0.6em;   /* Taille réduite */
       font-weight: 700;
       letter-spacing: 0.1em;
       background: none;
     }
     .video-loader .bar {
-      width: 45px;         /* Largeur de la barre réduite de moitié */
-      height: 2.5px;       /* Épaisseur de la barre réduite de moitié */
+      width: 45px;         /* Largeur réduite */
+      height: 2.5px;       /* Épaisseur réduite */
       background: #222;
       border-radius: 4px;
       margin-bottom: 7px;
@@ -289,14 +290,23 @@
   </style>
 </head>
 <body>
-  <!-- FOND VIDEO YOUTUBE 9:16 -->
+  <!-- FOND VIDEO YOUTUBE 9:16 (deux vidéos selon device) -->
   <div class="video-bg" aria-hidden="true">
-    <iframe id="ytbg"
+    <!-- Vidéo PC (QCiVQPBRlnY) -->
+    <iframe id="ytbg-pc"
+      src="https://www.youtube.com/embed/QCiVQPBRlnY?autoplay=1&mute=1&controls=0&loop=1&playlist=QCiVQPBRlnY&modestbranding=1&showinfo=0&rel=0&enablejsapi=1"
+      allow="autoplay; encrypted-media"
+      allowfullscreen
+      frameborder="0"
+      title="Fashionzer background video PC">
+    </iframe>
+    <!-- Vidéo mobile (owhJnF6Cya8) -->
+    <iframe id="ytbg-mobile"
       src="https://www.youtube.com/embed/owhJnF6Cya8?autoplay=1&mute=1&controls=0&loop=1&playlist=owhJnF6Cya8&modestbranding=1&showinfo=0&rel=0&enablejsapi=1"
       allow="autoplay; encrypted-media"
       allowfullscreen
       frameborder="0"
-      title="Fashionzer background video">
+      title="Fashionzer background video mobile">
     </iframe>
     <div class="video-overlay" id="videoOverlay">
       <div class="video-loader" id="videoLoader" aria-label="Download">
@@ -344,6 +354,15 @@
     </div>
   </div>
   <script>
+    // Affiche la bonne vidéo selon la taille d'écran
+    function showRightVideo() {
+      var isDesktop = window.matchMedia('(min-width: 800px)').matches;
+      document.getElementById('ytbg-pc').style.display = isDesktop ? 'block' : 'none';
+      document.getElementById('ytbg-mobile').style.display = isDesktop ? 'none' : 'block';
+    }
+    showRightVideo();
+    window.addEventListener('resize', showRightVideo);
+
     // Hamburger menu
     const hamburger = document.getElementById('hamburger-menu');
     const menu = document.getElementById('side-menu');
@@ -409,7 +428,9 @@
       document.getElementById('videoOverlay').classList.add('hide');
     }
     function onYouTubeIframeAPIReady() {
-      new YT.Player('ytbg', {
+      // Détecte la vidéo visible pour l'API
+      var playerId = window.matchMedia('(min-width: 800px)').matches ? 'ytbg-pc' : 'ytbg-mobile';
+      new YT.Player(playerId, {
         events: {
           'onReady': function() {
             hideOverlayNow();
